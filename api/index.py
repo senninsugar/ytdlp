@@ -74,6 +74,11 @@ MAX_PROXY_ATTEMPTS = int(
     os.getenv("MAX_PROXY_ATTEMPTS", "4")
 )
 
+COOKIES_PATH = os.getenv(
+    "COOKIES_PATH",
+    os.getenv("COOKIE_FILE", "cookies.txt")
+)
+
 
 class APIError(Exception):
     pass
@@ -914,6 +919,9 @@ def extract_info_sync(
         "geo_bypass": False,
         "check_formats": False,
     }
+
+    if os.path.exists(COOKIES_PATH):
+        options["cookiefile"] = COOKIES_PATH
 
     if proxy:
         options["proxy"] = proxy
